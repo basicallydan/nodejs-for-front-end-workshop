@@ -108,9 +108,27 @@ SEE `checkout-rest/server.js`
 
 # Executing your code as a standalone package
 
+Now that we have a working REST API, it makes sense for us to want to be able to make it globally installable so we can run it from anywhere on our system. To do this, we need to specify a property in `package.json`.
+
+```json
+...
+  "bin": "./server.js",
+...
+```
+
+Once we've done this, we can type `npm install ./ -g` on the command line, and our new module will be installed throughout the system using `server.js` as the file to execute. Typing `checkout-rest` will run our server.
+
 ---
 
 # Publishing your code to npm
+
+This final step allows us to publish our module to the npm directory so that when people try to install our module for their projects or their system, they can do so.
+
+First we can create a user on NPM using `npm adduser`. This will ask for your desired credentials on the command line then create your account.
+
+If you already had an account that you'd created on the site, type `npm login`, and type in your credentials.
+
+Now it's a simple matter of typing `npm publish`, and your package will be up on the npm directory. Just make sure you all choose different names for your packages!
 
 ---
 
