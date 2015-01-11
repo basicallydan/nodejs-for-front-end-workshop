@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FEWD Lesson 17: Web APIs</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="lib/paraiso.light.css">
+    <link rel="stylesheet" type="text/css" href="lib/slides.css">
+    <link rel="stylesheet" type="text/css" href="lib/slides-print.css" media="print">
+  </head>
+  <body>
+    <textarea id="source">
+layout: true
+
+<footer class="ga-footer">
+  <img src="img/ga/logo-full-flat-black.png">
+  <img src="img/ga/logo-full-flat-white.png">
+</footer>
+
+---
+
+class:topic-header
+
+# NodeJS for Front-End Developers
+
+## Dan Hough
+
+---
+
+## Agenda
+
+* Review: Transitions and Maps
+* JSON
+* Web APIs
+* Code-along: My Reddit
+* Sending Emails
+* Embedding Tweets
+
+---
+
+## Review: Transitions
+
+## Transition Syntax
+
+```css
+transition: [transition-property] [transition-duration] [transition-timing-function] [transition-delay];
+```
+
+* `transition-property`: A CSS property such as `color` or `width`
+* `transition-duration`: A duration in seconds such as 1s or 0.5s
+* `transition-timing-function`: The timing function, such as `linear` or `ease-out`
+* `transition-delay`: The delay before the transition begins, also in seconds
+
+---
+
+## Transitions: Multiple Effects Example
+
+
+.left-column-75[
+```css
+a {
+  display: block;
+  background-color: green;
+  height: 100px;
+  color:white;
+  transition: background-color 0.5s linear, height 1.5s linear;
+}
+
+a:hover {
+  background-color: red;
+  height: 300px;
+}
+```
+]
+
+.right-column-25[
+<a href="#" class="trans-multiple-ex">Hover over me!</a>
+]
+<style type="text/css">
+a.trans-multiple-ex {
+  display: block;
+  background-color: green;
+  height: 100px;
+  color:white;
+  transition: background-color 0.5s linear, height 1.5s linear;
+}
+
+a.trans-multiple-ex:hover {
+  background-color: red;
+  height: 300px;
+}
+</style>
+
+---
+
+## Transitions: Timing Functions Example
+
+
+.left-column[
+```css
+a {
+  display: block;
+  background-color: blue;
+  height: 100px;
+  color:white;
+  transition: height 4.5s ease-in;
+  /* On the right it's */
+  /* "height 4.5s linear" */
+}
+
+a:hover {
+  height: 500px;
+}
+```
+]
+
+.right-column[
+<div class="trans-timing-ex-2">
+  <a href="#" class="easein">I'm easing in</a>
+  <a href="#" class="lin">I'm linear</a>
+</div>
+]
+<style type="text/css">
+.trans-timing-ex-2 a {
+  display: inline-block;
+  background-color: blue;
+  height:100px;
+  width:200px;
+  color:white;
+  float:left;
+  text-align: center;
+  margin:0 20px;
+}
+
+.trans-timing-ex-2 a.lin {
+  transition: height 4.5s linear;
+}
+.trans-timing-ex-2 a.easein {
+  transition: height 4.5s ease-in;
+}
+
+.trans-timing-ex-2:hover a {
+  height: 500px;
+}
+</style>
+
+---
+
+## Review: Google Maps
+
+* The Google Maps JavaScript API is a simple way to interact with the Google Maps service via JavaScript
+* The API is highly performant and very well documented<br>https://developers.google.com/maps/documentation/javascript/
+* We can mash the API up with other services to create infographics, or simply add markers to a map for contact details
+* To add the API to your HTML:<br>`<script src="https://maps.googleapis.com/maps/api/js"></script>`
+
+---
+
+class: topic-header
+
+# JSON
+## JavaScript Object Notation
+
+---
+
+## JSON
+
+* JavaScript Object Notation
+* We have touched on this in previous lessons with `JSON.stringify` and `JSON.parse`
+* Pronounced "Jason"
+* Devised by noted JavaScript master Douglas Crockford
+* Format for transmitting data structures in a platform-agnostic way between a server and a web application
+* JSON looks a lot like a JavaScript object... but more stringy!
+
+---
+
+## JSON: Why?
+
+* It’s the most common format for data interchange on the web
+* Most public APIs will emit their data in JSON (Twitter, Google, Facebook, Reddit, etc)
+* The older formats like XML are difficult and time-consuming to parse
+* Your web browser can transparently turn a JSON response from a web API into a JavaScript object
+
+---
+
+.left-column[
+## JavaScript Object
+```js
+{
+  make : "Tesla",
+  model : "Model S",
+  year : 2013,
+  features : [
+    'Electric',
+    'Shiny',
+    'Awesome'
+  ]
+}
+```
+]
+
+.right-column[
+## JSON
+```json
+{
+  "make" : "Tesla",
+  "model" : "Model S",
+  "year" : 2013,
+  "features" : [
+    "Electric",
+    "Shiny",
+    "Awesome"
+  ]
+}
+```
+]
+
+.important[
+The same, only stringier!
+]
+
+---
+
+## Tools
+
+* JSONView for Google Chrome lets you view prettified JSON in your browser<br>http://bit.ly/1hvTe0r
+* JSONLint is a web app for validating your JSON is valid – much like JSHint for JavaScript.<br>http://jsonlint.com/
+* Your browser can "stringify" a JavaScript object into a JSON string and vice-versa
+
+.left-column[
+```javascript
+JSON.stringify({
+  make : "Tesla",
+  model : "Model S"
+});
+```
+* This is also known as "encoding"
+]
+
+.right-column[
+```javascript
+JSON.parse('{ "make" : "Tesla", "model" : "Model S" }');
+```
+* This is also known as "decoding"
+]
+
+<!-- Classic Tweet: https://twitter.com/php_ceo/status/435105782829305857 -->
+
+---
+
+## JSON: Remember
+
+* The data you will get back from web APIs (which we'll discuss in a minute) will often be encoded as JSON, so you will need to `JSON.parse` it before you can use it in your JavaScript, some how.
+* Now, where can we get some JSON...?
+
+---
+
+class: topic-header
+
+# Web APIs
+## Application Programming Interfaces (API)
+
+---
+
+## Application Programming Interface (API)
+
+* As we know, an API is what developers use to interact with a piece of software (e.g. the Google Maps API from last lesson)
+* Formally, an API describes how software components interact with each other
+* Conversely, a UI (**User** Interface) describes how a user talks to the software
+* Your phone might provide an application developer a "camera" API, which would have methods for taking photos, downloading photos, enabling the flash and so on. The application developer therefore needn't write this code.
+
+---
+
+## Web APIs
+
+* Some businesses expose their data for consumption through APIs
+* Web APIs that expose data generally emit this using the JSON format
+  * [BBC 6 Music (radio) Playlist JSON example](http://www.bbc.co.uk/6music/playlist.json)<br>(http://www.bbc.co.uk/6music/playlist.json)
+* Web APIs can be used not only for consuming data, but also for exposing functionality
+  * Twilio allow you to send and receive text messages and phone calls through their API
+  * Reddit allow you to post new links but also list all links on a particular subject
+  * Foursquare allow you to search nearby places and also register a user's presence at certain places
+
+---
+
+## Parsing remote JSON with jQuery
+
+* jQuery provides some helpful methods for retrieving and parsing JSON
+* `$.get(url, callback)` for fetching remote files
+* `$.parseJSON(string)` to parse a JSON string into a JavaScript object<br>(the same as `JSON.parse(strong)`, but that isn't available in older browsers)
+* You could do a `$.get` on a JSON file, then `$.parseJSON` on the contents
+* Better yet, `$.getJSON(url, callback)` does both in one fell swoop
+* Note: the remote data source must support `JSONP` or `CORS` - for now, you needn't know too much about what this means, and most will support `CORS`
+
+---
+
+## Web APIs
+
+* `getJSON`'s callback function exposes a `data` object that is the JavaScript object parsed from the JSON string retrieved from the URL
+
+```js
+$.getJSON("http://www.bbc.co.uk/6music/playlist.json", function (data) {
+  console.log(data);
+});
+```
+
+* The `data` object is just like any other object in JavaScript - or it could be an array. This you should know if you know what to expect from the website's API.
+
+---
+
+class: topic-header
+
+# Code-along
+## My Reddit
+
+---
+
+## My Reddit
+
+* In case you're not familiar with Reddit, it is a "link-sharing" website.
+* Users sign up and submit, or "post" links to other locations on the web, and other users vote that they either like or dislike what the original poster shared
+* You can discuss the content, start arguments with fellow Redditors or give them "gold", as a way to indicate how great their contribution was
+* Links are posted to different topics, organised in "Subreddits". For example, "Movies" is a subreddit, as is "Funny", and "Aww".
+* http://reddit.com
+* Best of all, Reddit has an extremely open Web API which anybody can access without authentication: in other words, you can use it even without signing up!
+
+---
+
+## My Reddit
+
+* We're going to try to re-create some of Reddit's website using their API, using what we've learned today.
+
+---
+
+## Closed APIs
+
+* Not all organisations offer an API quite as open as Reddit's. Sometimes, access by third parties (known as client applications) is restricted.
+* Some will be protected by authentication methods including standard username & password, or a more complex, more secure method of authentication called OAuth.
+* Others will allow open, unauthenticated access to their data but only through the channels they provide.
+* Others will only allow client applications to use the API if they provide an "API Key" which they were given when signing up.
+* This is generally done to prevent misuse or overuse of the API. For many companies, it is only cost-effective for them to provide the API if they restrict the use in this way
+
+---
+
+## Sending Emails
+
+* Mandrill is a web application created by the MailChimp team for sending one-off, or "transactional" emails.
+* They provide an API, as well as a JavaScript "wrapper" for it, so we can more easily access the API in JavaScript.
+* The only thing they require is that you have signed up on their website and created an API key
+
+### Sign up and get an API key
+
+1. Go to https://mandrill.com/signup/ and sign up
+2. Log in at https://mandrill.com/login
+3. Go to https://mandrillapp.com/settings/index and click "+ Add API Key"
+4. You will be given a random string of characters which looks a bit like `E0wMT13opHfaPPUTFCkpSq` - **copy this, and paste it somewhere for later**
+
+---
+
+class:topic-header
+
+# Code-along
+## Sending Emails with Mandrill
+
+---
+
+## Embedding your Tweets
+
+* You can get deeper access to Twitter's API if you authenticate, but a common use case of Twitter's API is simply to embed a panel in your web page displaying your Tweets.
+* Twitter provides a method for doing this, using their "Widgets"
+* If you have a Twitter account, go to https://twitter.com/settings/widgets - here you can create a new widget which displays a timeline for a certain user. At the end of this process, you're given some HTML and some "minified" JavaScript to paste into your web page. This is the widget for my timeline:
+
+```html
+<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/basicallydan" data-widget-id="536476867763916800">Tweets by @basicallydan</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+```
+
+---
+
+class: topic-header
+
+# Lab session
+## Final projects
+
+* Need a hand with anything?
+* Stuck somewhere?
+* Already finished and out of ideas?
+
+We can help!
+
+---
+
+class: topic-header
+
+# Thanks!
+
+## dan@danhough.com
+
+    </textarea>
+    <script src="lib/remark-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        ratio: '16:9'
+      });
+    </script>
+  </body>
+</html>
