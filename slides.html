@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FEWD Lesson 17: Web APIs</title>
+    <title>NodeJS For Front-End Developers</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="lib/paraiso.light.css">
     <link rel="stylesheet" type="text/css" href="lib/slides.css">
@@ -26,365 +26,226 @@ class:topic-header
 
 ---
 
+# What is NodeJS?
+
+* It's a JavaScript runtime environment, in the sense that web browsers are JavaScript runtime environments
+* It allows us to write scripts, servers, tools and all sorts of other software applications in JavaScript to run them mostly on the command line
+
+---
+
 ## Agenda
 
-* Review: Transitions and Maps
-* JSON
-* Web APIs
-* Code-along: My Reddit
-* Sending Emails
-* Embedding Tweets
+* "Hello World" in NodeJS
+* NPM and Installing Modules
+* Using modules
+* Writing your own modules
+* Writing unit tests with Mocha
+* HTTP Response/Request Primer
+* What is REST?
+* Building an API With Express JS
+* Making your code executeable on the command line
+* Publishing your code on NPM
+* Q&amp;A
 
 ---
 
-## Review: Transitions
+## Your First NodeJS Application
 
-## Transition Syntax
+Make a new folder using `mkdir helloworld`, somewhere you can find it later. Then, `cd helloworld` to go into the folder.
 
-```css
-transition: [transition-property] [transition-duration] [transition-timing-function] [transition-delay];
+---
+
+## Your First NodeJS Application
+
+We start new NodeJS projects by initialising it on the command line.
+
+```terminal
+npm init
+...
+This utility will walk you through creating a package.json file.
+It only covers the most common items, and tries to guess sane defaults.
+...
+{
+  "name": "helloworld",
+  ...
+  "license": "ISC"
+}
+
+
+Is this ok? (yes)
 ```
 
-* `transition-property`: A CSS property such as `color` or `width`
-* `transition-duration`: A duration in seconds such as 1s or 0.5s
-* `transition-timing-function`: The timing function, such as `linear` or `ease-out`
-* `transition-delay`: The delay before the transition begins, also in seconds
-
----
-
-## Transitions: Multiple Effects Example
-
-
-.left-column-75[
-```css
-a {
-  display: block;
-  background-color: green;
-  height: 100px;
-  color:white;
-  transition: background-color 0.5s linear, height 1.5s linear;
-}
-
-a:hover {
-  background-color: red;
-  height: 300px;
-}
-```
-]
-
-.right-column-25[
-<a href="#" class="trans-multiple-ex">Hover over me!</a>
-]
-<style type="text/css">
-a.trans-multiple-ex {
-  display: block;
-  background-color: green;
-  height: 100px;
-  color:white;
-  transition: background-color 0.5s linear, height 1.5s linear;
-}
-
-a.trans-multiple-ex:hover {
-  background-color: red;
-  height: 300px;
-}
-</style>
-
----
-
-## Transitions: Timing Functions Example
-
-
-.left-column[
-```css
-a {
-  display: block;
-  background-color: blue;
-  height: 100px;
-  color:white;
-  transition: height 4.5s ease-in;
-  /* On the right it's */
-  /* "height 4.5s linear" */
-}
-
-a:hover {
-  height: 500px;
-}
-```
-]
-
-.right-column[
-<div class="trans-timing-ex-2">
-  <a href="#" class="easein">I'm easing in</a>
-  <a href="#" class="lin">I'm linear</a>
-</div>
-]
-<style type="text/css">
-.trans-timing-ex-2 a {
-  display: inline-block;
-  background-color: blue;
-  height:100px;
-  width:200px;
-  color:white;
-  float:left;
-  text-align: center;
-  margin:0 20px;
-}
-
-.trans-timing-ex-2 a.lin {
-  transition: height 4.5s linear;
-}
-.trans-timing-ex-2 a.easein {
-  transition: height 4.5s ease-in;
-}
-
-.trans-timing-ex-2:hover a {
-  height: 500px;
-}
-</style>
-
----
-
-## Review: Google Maps
-
-* The Google Maps JavaScript API is a simple way to interact with the Google Maps service via JavaScript
-* The API is highly performant and very well documented<br>https://developers.google.com/maps/documentation/javascript/
-* We can mash the API up with other services to create infographics, or simply add markers to a map for contact details
-* To add the API to your HTML:<br>`<script src="https://maps.googleapis.com/maps/api/js"></script>`
+Hit enter until the project has been created! This generates a `package.json` file.
 
 ---
 
 class: topic-header
 
-# JSON
-## JavaScript Object Notation
+# Modules and NPM
 
 ---
 
-## JSON
+## Using Modules
 
-* JavaScript Object Notation
-* We have touched on this in previous lessons with `JSON.stringify` and `JSON.parse`
-* Pronounced "Jason"
-* Devised by noted JavaScript master Douglas Crockford
-* Format for transmitting data structures in a platform-agnostic way between a server and a web application
-* JSON looks a lot like a JavaScript object... but more stringy!
+In NodeJS, we use the `require()` function, which fetches the module that we need and gives us all of the functions and properties which it advertises.
 
----
-
-## JSON: Why?
-
-* It’s the most common format for data interchange on the web
-* Most public APIs will emit their data in JSON (Twitter, Google, Facebook, Reddit, etc)
-* The older formats like XML are difficult and time-consuming to parse
-* Your web browser can transparently turn a JSON response from a web API into a JavaScript object
-
----
-
-.left-column[
-## JavaScript Object
-```js
-{
-  make : "Tesla",
-  model : "Model S",
-  year : 2013,
-  features : [
-    'Electric',
-    'Shiny',
-    'Awesome'
-  ]
-}
-```
-]
-
-.right-column[
-## JSON
-```json
-{
-  "make" : "Tesla",
-  "model" : "Model S",
-  "year" : 2013,
-  "features" : [
-    "Electric",
-    "Shiny",
-    "Awesome"
-  ]
-}
-```
-]
-
-.important[
-The same, only stringier!
-]
-
----
-
-## Tools
-
-* JSONView for Google Chrome lets you view prettified JSON in your browser<br>http://bit.ly/1hvTe0r
-* JSONLint is a web app for validating your JSON is valid – much like JSHint for JavaScript.<br>http://jsonlint.com/
-* Your browser can "stringify" a JavaScript object into a JSON string and vice-versa
-
-.left-column[
-```javascript
-JSON.stringify({
-  make : "Tesla",
-  model : "Model S"
-});
-```
-* This is also known as "encoding"
-]
-
-.right-column[
-```javascript
-JSON.parse('{ "make" : "Tesla", "model" : "Model S" }');
-```
-* This is also known as "decoding"
-]
-
-<!-- Classic Tweet: https://twitter.com/php_ceo/status/435105782829305857 -->
-
----
-
-## JSON: Remember
-
-* The data you will get back from web APIs (which we'll discuss in a minute) will often be encoded as JSON, so you will need to `JSON.parse` it before you can use it in your JavaScript, some how.
-* Now, where can we get some JSON...?
-
----
-
-class: topic-header
-
-# Web APIs
-## Application Programming Interfaces (API)
-
----
-
-## Application Programming Interface (API)
-
-* As we know, an API is what developers use to interact with a piece of software (e.g. the Google Maps API from last lesson)
-* Formally, an API describes how software components interact with each other
-* Conversely, a UI (**User** Interface) describes how a user talks to the software
-* Your phone might provide an application developer a "camera" API, which would have methods for taking photos, downloading photos, enabling the flash and so on. The application developer therefore needn't write this code.
-
----
-
-## Web APIs
-
-* Some businesses expose their data for consumption through APIs
-* Web APIs that expose data generally emit this using the JSON format
-  * [BBC 6 Music (radio) Playlist JSON example](http://www.bbc.co.uk/6music/playlist.json)<br>(http://www.bbc.co.uk/6music/playlist.json)
-* Web APIs can be used not only for consuming data, but also for exposing functionality
-  * Twilio allow you to send and receive text messages and phone calls through their API
-  * Reddit allow you to post new links but also list all links on a particular subject
-  * Foursquare allow you to search nearby places and also register a user's presence at certain places
-
----
-
-## Parsing remote JSON with jQuery
-
-* jQuery provides some helpful methods for retrieving and parsing JSON
-* `$.get(url, callback)` for fetching remote files
-* `$.parseJSON(string)` to parse a JSON string into a JavaScript object<br>(the same as `JSON.parse(strong)`, but that isn't available in older browsers)
-* You could do a `$.get` on a JSON file, then `$.parseJSON` on the contents
-* Better yet, `$.getJSON(url, callback)` does both in one fell swoop
-* Note: the remote data source must support `JSONP` or `CORS` - for now, you needn't know too much about what this means, and most will support `CORS`
-
----
-
-## Web APIs
-
-* `getJSON`'s callback function exposes a `data` object that is the JavaScript object parsed from the JSON string retrieved from the URL
+In Node, there are a lot of modules which are available out of the box. For example, let's `require` the path module.
 
 ```js
-$.getJSON("http://www.bbc.co.uk/6music/playlist.json", function (data) {
-  console.log(data);
-});
+var path = require('path');
 ```
 
-* The `data` object is just like any other object in JavaScript - or it could be an array. This you should know if you know what to expect from the website's API.
+---
+
+## NPM and Installing Modules
+
+The Node Package Manager (`npm`) is a command-line tool and, in a way, a whole ecosystem of hundreds of thousands of JavaScript modules written by developers around the world to solve common problems.
+
+The npm directory is searchable at http://npmjs.org/, so if you are looking for a module to do a certain task you can probably find it pretty easily.
+
+Let's make a new project which lists some data from a 3rd-party API. Call it `todayilearned` and do an `npm init` in the folder. When we've done that, we'll `cd` into the folder and type:
+
+```bash
+npm install request --save
+```
+
+---
+
+## Writing Our Own Modules
+
+We can write modules to be used in any other bits of NodeJS code by using the `module` global variable. For instance, we could turn a function in a file into a module by doing this:
+
+```javascript
+function thatModuleYouNeeded () {
+  
+}
+module.exports = thatModuleYouNeeded;
+```
+
+If you `require()` that file you can now use the function `thatModuleYouNeeded`.
+
+Let's turn our `todayilearned` function into a module!
 
 ---
 
 class: topic-header
 
-# Code-along
-## My Reddit
+# Test-Driven Development
 
 ---
 
-## My Reddit
+## Test-Driven Development
 
-* In case you're not familiar with Reddit, it is a "link-sharing" website.
-* Users sign up and submit, or "post" links to other locations on the web, and other users vote that they either like or dislike what the original poster shared
-* You can discuss the content, start arguments with fellow Redditors or give them "gold", as a way to indicate how great their contribution was
-* Links are posted to different topics, organised in "Subreddits". For example, "Movies" is a subreddit, as is "Funny", and "Aww".
-* http://reddit.com
-* Best of all, Reddit has an extremely open Web API which anybody can access without authentication: in other words, you can use it even without signing up!
+In case you're not familiar...
 
----
-
-## My Reddit
-
-* We're going to try to re-create some of Reddit's website using their API, using what we've learned today.
+1. Write a unit test for a feature
+2. Make it pass
+3. Write a unit test for another feature
+4. Make it pass, prevent others from breaking
+5. Go to 3, repeat until you've implemented all the features you wanted
 
 ---
 
-## Closed APIs
+## Test-Driven Development in NodeJS
 
-* Not all organisations offer an API quite as open as Reddit's. Sometimes, access by third parties (known as client applications) is restricted.
-* Some will be protected by authentication methods including standard username & password, or a more complex, more secure method of authentication called OAuth.
-* Others will allow open, unauthenticated access to their data but only through the channels they provide.
-* Others will only allow client applications to use the API if they provide an "API Key" which they were given when signing up.
-* This is generally done to prevent misuse or overuse of the API. For many companies, it is only cost-effective for them to provide the API if they restrict the use in this way
+We're gonna use a really great "test runner" called Mocha. We're going to install it globally on our systems:
 
----
+```bash
+npm install mocha -g
+```
 
-## Sending Emails
-
-* Mandrill is a web application created by the MailChimp team for sending one-off, or "transactional" emails.
-* They provide an API, as well as a JavaScript "wrapper" for it, so we can more easily access the API in JavaScript.
-* The only thing they require is that you have signed up on their website and created an API key
-
-### Sign up and get an API key
-
-1. Go to https://mandrill.com/signup/ and sign up
-2. Log in at https://mandrill.com/login
-3. Go to https://mandrillapp.com/settings/index and click "+ Add API Key"
-4. You will be given a random string of characters which looks a bit like `E0wMT13opHfaPPUTFCkpSq` - **copy this, and paste it somewhere for later**
+We're going to use `mocha` to run our unit tests, and we're going to use these tests to write a simple retail checkout system. No, not for e-commerce, a good old fashioned till that calculates change.
 
 ---
 
-class:topic-header
+class: topic-header
 
-# Code-along
-## Sending Emails with Mandrill
+# Break time!
+
+Please be back in five minutes :)
 
 ---
 
-## Embedding your Tweets
+class: topic-header
 
-* You can get deeper access to Twitter's API if you authenticate, but a common use case of Twitter's API is simply to embed a panel in your web page displaying your Tweets.
-* Twitter provides a method for doing this, using their "Widgets"
-* If you have a Twitter account, go to https://twitter.com/settings/widgets - here you can create a new widget which displays a timeline for a certain user. At the end of this process, you're given some HTML and some "minified" JavaScript to paste into your web page. This is the widget for my timeline:
+# REST APIs in Node
+## Break's over, time for REST
 
-```html
-<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/basicallydan" data-widget-id="536476867763916800">Tweets by @basicallydan</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+---
+
+## HTTP Requests
+
+As you may know, the web is driven largely by HTTP Requests and Responses.
+
+When we hit a web page, we make a request using the `GET` method to a URL and it sends back a `200` with a `body` full of HTML.
+
+And of course, when we fill in a form, we make a `POST` request and send a `body` full of some other data which is then, usually, saved to a database somewhere.
+
+---
+
+## REST
+
+Now, REST stands for **R**epresentational **S**tate **T**ransfer. The idea is that by using HTTP Requests with certain HTTP Methods such as `GET`, `POST` and `PUT` we can drive the state of an application.
+
+Each URL on a system represents a resource of set of resources, and we can modify those resources by choosing our methods carefully.
+
+---
+
+## REST
+
+For example, if we make a `POST` request to `/transactions` on an API, a new `Transaction` will be created on our system with the data we send with our request. The body will represent the **state** of that `Transaction` resource.
+
+When this `Transaction` resource is created, it'll return to us, in the response, some info about the resource including a link to it - it's canonical URL - such as `/transactions/1`. We can make a `GET` request to this URL to get the full resource information. The `GET` request will tell us about the latest **state**.
+
+If we need to *modify* the **state** of the resource, we can make a `PUT` request to its URL along with some some new data with which to overwrite existing data.
+
+---
+
+## Checkout REST API
+
+Now we're going to turn our Checkout module into a REST API. A really easy way to write a REST API is using the `express` module. Install it to your project
+
+```bash
+npm install express body-parser --save
 ```
 
 ---
 
 class: topic-header
 
-# Lab session
-## Final projects
+# Making it Real
 
-* Need a hand with anything?
-* Stuck somewhere?
-* Already finished and out of ideas?
+---
 
-We can help!
+## Executing your code as a standalone package
+
+This is surprisingly simple. We're gonna make our Checkout API into a module we can install globally and run from anywhere.
+
+Add this line to your new Checkout API `package.json` file.
+
+```
+"bin": "./server.js",
+```
+
+We can now type `npm install ./ -g` in our project directory, and whatever we called our project will magically be executable from anywhere.
+
+Try running it! If the name of your folder when you ran `npm init` was `checkout` then type `checkout` - it should start running.
+
+---
+
+## Publishing your code to npm
+
+Now that we have a functional module, with unit tests and fairly good separation of concerns, it's time to let the rest of the world use it. We can do this all on the command line.
+
+1. If you don't already have an `npm` account, create a user on NPM using `npm adduser`. This will ask for your desired credentials on the command line then create your account.
+2. If you already had an account that you'd created on the site, type `npm login`, and type in your credentials.
+3. Now it's a simple matter of typing `npm publish`, and your package will be up on the npm directory. Just make sure you all choose different names for your packages!
+
+---
+
+class: topic-header
+
+# Question Time
 
 ---
 
