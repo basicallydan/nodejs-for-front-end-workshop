@@ -84,18 +84,6 @@ We're going to turn our Reddit Today I Learned script into a self-contained modu
 
 ---
 
-# Test-Driven Development
-
-We're going to use the technique of test-driven development to create a slightly more complex script now: one which will keep track of sales at a hypothetical shop. We need to be able to store sales in memory, as well whether the customer paid it, how much cash they paid with and how much change they are due.
-
-For this we're going to use Mocha, a NodeJS test runner. We need to write automated tests whose job it is to describe a feature of our module. We'll write tests which execute our code with certain inputs, and validate that the code will produce certain outputs.
-
-To install mocha, use `npm install mocha -g`
-
-SEE `checkout-tdd/Checkout.js` and `checkout-tdd/index.test.js`
-
----
-
 # REST
 
 Rest stands for Representational State Transfer. The idea is that by using HTTP Requests with certain HTTP Methods such as GET, POST and PUT we can drive the state of an application.

@@ -39,7 +39,6 @@ class:topic-header
 * NPM and Installing Modules
 * Using modules
 * Writing your own modules
-* Writing unit tests with Mocha
 * HTTP Response/Request Primer
 * What is REST?
 * Building an API With Express JS
@@ -130,36 +129,6 @@ Let's turn our `todayilearned` function into a module!
 
 class: topic-header
 
-# Test-Driven Development
-
----
-
-## Test-Driven Development
-
-In case you're not familiar...
-
-1. Write a unit test for a feature
-2. Make it pass
-3. Write a unit test for another feature
-4. Make it pass, prevent others from breaking
-5. Go to 3, repeat until you've implemented all the features you wanted
-
----
-
-## Test-Driven Development in NodeJS
-
-We're gonna use a really great "test runner" called Mocha. We're going to install it globally on our systems:
-
-```bash
-npm install mocha -g
-```
-
-We're going to use `mocha` to run our unit tests, and we're going to use these tests to write a simple retail checkout system. No, not for e-commerce, a good old fashioned till that calculates change.
-
----
-
-class: topic-header
-
 # Break time!
 
 Please be back in five minutes :)
@@ -235,7 +204,7 @@ Try running it! If the name of your folder when you ran `npm init` was `checkout
 
 ## Publishing your code to npm
 
-Now that we have a functional module, with unit tests and fairly good separation of concerns, it's time to let the rest of the world use it. We can do this all on the command line.
+Now that we have a functional module and fairly good separation of concerns, it's time to let the rest of the world use it. We can do this all on the command line.
 
 1. If you don't already have an `npm` account, create a user on NPM using `npm adduser`. This will ask for your desired credentials on the command line then create your account.
 2. If you already had an account that you'd created on the site, type `npm login`, and type in your credentials.

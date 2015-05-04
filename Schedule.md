@@ -6,7 +6,6 @@
 * 0:15: Using modules										(10min)
 * 0:25: NPM and Installing Modules							(15min)
 * 0:40: Writing your own modules							(10min)
-* 0:50: Writing unit tests with Mocha						(25min)
 * 1:15: --- BREAK ---										(5min)
 * 1:20: How does Response/Request work in HTTP				(10min)
 * 1:30: What is REST?										(5min)
