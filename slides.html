@@ -70,30 +70,6 @@ console.log('Hello world');
 
 ---
 
-## Your First NodeJS Application
-
-Now let's formalise our project by giving it a `package.json` file.
-
-```terminal
-npm init
-...
-This utility will walk you through creating a package.json file.
-It only covers the most common items, and tries to guess sane defaults.
-...
-{
-  "name": "helloworld",
-  ...
-  "license": "ISC"
-}
-
-
-Is this ok? (yes)
-```
-
-Hit enter until the project has been created! This generates the `package.json` file.
-
----
-
 class: topic-header
 
 # Modules and NPM
@@ -110,6 +86,33 @@ In Node, there are a lot of modules which are available out of the box. For exam
 var path = require('path');
 ```
 
+--
+
+Built-in NodeJS modules are documented at https://nodejs.org/api/.
+
+---
+
+## Modules and NPM
+
+However, if we want to use modules which aren't available by default, we have to install and save them locally.
+
+```terminal
+npm init
+...
+This utility will walk you through creating a package.json file. etc.
+...
+{
+  "name": "helloworld",
+  ...
+  "license": "ISC"
+}
+
+
+Is this ok? (yes)
+```
+
+Hit enter until the project has been created! This generates the `package.json` file.
+
 ---
 
 ## NPM and Installing Modules
@@ -118,10 +121,20 @@ The Node Package Manager (`npm`) is a command-line tool and, in a way, a whole e
 
 The npm directory is searchable at http://npmjs.org/, so if you are looking for a module to do a certain task you can probably find it pretty easily.
 
-Let's make a new project which lists some data from a 3rd-party API. Call it `todayilearned` and do an `npm init` in the folder. When we've done that, we'll `cd` into the folder and type:
+In the same folder where we created the `package.json` file, let's run the following command to download and save the module known as `request`.
 
 ```bash
 npm install request --save
+```
+
+---
+
+## Using the `request` module
+
+Like any module, we can use it by using `require` function:
+
+```
+var request = require('request');
 ```
 
 ---

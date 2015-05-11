@@ -26,18 +26,6 @@ So, very simple, one line. To run it, we're just gonna go into our folder on the
 
 Next thing we're gonna do is start getting some dependencies.
 
---
-
-To formalise our new project, we have to create a "package" file, which contains information about your project such as the name, version number, author and dependencies.
-
-So in the same folder that we created our index.js file, go into terminal and type this:
-
-```
-npm init
-```
-
-You'll get an interactive wizard-style tool for defining a few project properties, each of which have defaults. For now, let's just hit enter through each of them and allow npm to set them up for us. This has created our package file and named it `package.json`.
-
 ---
 
 # Using Modules
@@ -55,6 +43,20 @@ var path = require('path');
 ```
 
 SEE `hello-world-path/index.js`
+
+https://nodejs.org/api/ for more
+
+--
+
+To formalise our new project, we have to create a "package" file, which contains information about your project such as the name, version number, author and dependencies.
+
+So in the same folder that we created our index.js file, go into terminal and type this:
+
+```
+npm init
+```
+
+You'll get an interactive wizard-style tool for defining a few project properties, each of which have defaults. For now, let's just hit enter through each of them and allow npm to set them up for us. This has created our package file and named it `package.json`.
 
 ---
 
