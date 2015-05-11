@@ -16,14 +16,6 @@ Today we're going to learn about creating a new Node project, about the npm pack
 
 # Your First NodeJS Application
 
-We start new NodeJS projects by initialising it on the command line. Go into a new folder for your project and type
-
-```
-npm init
-```
-
-You'll get an interactive wizard-style tool for defining a few project properties, each of which have defaults. For now, let's just hit enter through each of them and allow npm to set them up for us. This has created a file called `package.json`, which contains information about your project such as the name, version number, author and dependencies. More about that later.
-
 The first program we're going to write is a classic: a Hello World application. You're probably all familiar with the syntax we're gonna use.
 
 SEE `hello-world/index.js`
@@ -33,6 +25,18 @@ SEE `hello-world/index.js`
 So, very simple, one line. To run it, we're just gonna go into our folder on the command line and type `node index.js`. You should now see your console writing out those timeless worlds.
 
 Next thing we're gonna do is start getting some dependencies.
+
+--
+
+To formalise our new project, we have to create a "package" file, which contains information about your project such as the name, version number, author and dependencies.
+
+So in the same folder that we created our index.js file, go into terminal and type this:
+
+```
+npm init
+```
+
+You'll get an interactive wizard-style tool for defining a few project properties, each of which have defaults. For now, let's just hit enter through each of them and allow npm to set them up for us. This has created our package file and named it `package.json`.
 
 ---
 
