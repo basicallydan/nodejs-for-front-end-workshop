@@ -195,21 +195,31 @@ Each URL on a system represents a resource of set of resources, and we can modif
 
 ## REST
 
-For example, if we make a `POST` request to `/transactions` on an API, a new `Transaction` will be created on our system with the data we send with our request. The body will represent the **state** of that `Transaction` resource.
+Let's take an example: A checkout/POS system as a REST API. This checkout is made up of sales, or "transactions".
 
-When this `Transaction` resource is created, it'll return to us, in the response, some info about the resource including a link to it - it's canonical URL - such as `/transactions/1`. We can make a `GET` request to this URL to get the full resource information. The `GET` request will tell us about the latest **state**.
+If we make a `POST` request to `/transactions` on an API, a new `Transaction` will be created on our system with the data we send with our request. The body will represent the **state** of that `Transaction` resource as it currently stands.
 
-If we need to *modify* the **state** of the resource, we can make a `PUT` request to its URL along with some some new data with which to overwrite existing data.
+When this `Transaction` resource is created, it'll return to us, in the response, some information about the resource including a link to it - it's canonical URL - such as `/transactions/1`. We can make a `GET` request to this URL to get the full resource information. The `GET` request will tell us about the latest **state**.
 
 ---
 
 ## Checkout REST API
 
-Now we're going to turn our Checkout module into a REST API. A really easy way to write a REST API is using the `express` module. Install it to your project
+Now we're going to make a REST API for a simple Checkout system. A really easy way to write a REST API is using the `express` module. Install it to your project:
 
 ```bash
 npm install express body-parser --save
 ```
+
+We're also installing the `body-parser` module, because `express` needs it in order to understand the data we're going to send it.
+
+Now, let's make ourselves an API!
+
+---
+
+class: topic-header
+
+# Code-along: A REST Checkout
 
 ---
 
