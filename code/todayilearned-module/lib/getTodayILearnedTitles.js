@@ -6,7 +6,7 @@ function getTodayILearnedTitles(options, callback) {
 	var titles = [];
 	if (!options) {
 		options = {
-			timeFrame: 'day'
+			timeFrame: 'day' // or week, or month, or year
 		};
 	}
 	request.get({ url : 'http://www.reddit.com/r/todayilearned/top.json?sort=top&t=' + options.timeFrame, json : true }, function (err, response, body) {
