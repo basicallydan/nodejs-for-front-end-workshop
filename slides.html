@@ -50,23 +50,36 @@ class:topic-header
 
 ## Your First NodeJS Application
 
-Make a new folder using `mkdir helloworld`, somewhere you can find it later. Then, `cd helloworld` to go into the folder.
+On the command line/terminal, make a new folder using `mkdir nodejs-workshop`. Then, type `cd nodejs-workshop` to navigate into the folder.
 
 ---
 
 ## Your First NodeJS Application
 
-In this folder, we're gonna create a new file called `index.js`. You can create it using the command line, with `touch index.js`, or you can open up Sublime Text to do it: Just go to File -> New, then use File -> Save and find your `helloworld` folder to save it in.
+In this folder, we'll create a new file called `index.js`. Use Sublime Text to open the folder, using File -> Open ("Open Folder" in Windows) and then select the folder. You should see a sidebar, with "nodejs-workshop" at the top.
+
+Now go to File -> New, then use File -> Save and make sure it saves in the `nodejs-workshop` folder, as `index.js`
 
 ---
 
 ## Your First NodeJS Application
 
-Now for a simple program. It will simply print out to us the text `Hello world`. For front-end JavaScript devs this should be very familiar:
+By this point you should be in the following situation:
+
+* Terminal or Command Line should say something like `$ nodejs-workshop`
+* Sublime Text should have the `nodejs-workshop` folder open with a sidebar on the left showing `index.js`, with that very file open.
+
+---
+
+## Your First NodeJS Application
+
+Now for a simple program. It will simply print out to us the text `Hello world`. For front-end JavaScript devs this should be very familiar. Type this into `index.js`:
 
 ```javascript
 console.log('Hello world');
 ```
+
+Back on the command line, just type `node index.js` - and see it printing stuff out!
 
 ---
 
@@ -80,21 +93,37 @@ class: topic-header
 
 In NodeJS, we use the `require()` function, which fetches the module that we need and gives us all of the functions and properties which it advertises.
 
-In Node, there are a lot of modules which are available out of the box. For example, let's `require` the path module.
+In Node, there are a lot of modules which are available out of the box. For example, let's `require` the `path` module and try it out.
 
 ```js
 var path = require('path');
 ```
 
---
+---
+
+class: topic-header
+
+## Code-along: Using the `path` module
+
+---
+
+## Using Modules
+
+In NodeJS, we use the `require()` function, which fetches the module that we need and gives us all of the functions and properties which it advertises.
+
+In Node, there are a lot of modules which are available out of the box. For example, let's `require` the `path` module and try it out.
+
+```js
+var path = require('path');
+```
 
 Built-in NodeJS modules are documented at https://nodejs.org/api/.
 
 ---
 
-## Modules and NPM
+### Third-party modules
 
-However, if we want to use modules which aren't available by default, we have to install and save them locally.
+If we want to use modules which aren't available by default, we have to download and save them locally. For this, we need a `package.json` file. Type `npm init` in your `nodejs-workshop` folder to create one.
 
 ```terminal
 npm init
@@ -131,7 +160,7 @@ npm install request --save
 
 ## Using the `request` module
 
-Like any module, we can use it by using `require` function:
+Just like with the `path` module earlier, we can use it by using `require` function:
 
 ```
 var request = require('request');
@@ -268,7 +297,7 @@ class: topic-header
 * I'll send out the Notes and Slides
 * All the code is available on GitHub:
   * http://bit.ly/nodeforfront
-* If you need help with anything and Google is no help, I can be reached at dan@danhough.com
+* If you need help with anything and Google is no help, I can be reached at **dan@danhough.com**
 * I also sometimes blog about Node and JavaScript on my website, [danhough.com](http://danhough.com)
 
     </textarea>
