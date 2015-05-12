@@ -99,9 +99,11 @@ class: topic-header
 
 ## Using Modules
 
+NodeJS modules are pretty much just collections of JavaScript functions in a nice, convenient package. Sometimes a code library will be contained in a module, other times it'll be a single function.
+
 In NodeJS, we use the `require()` function, which fetches the module that we need and gives us all of the functions and properties which it advertises.
 
-In Node, there are a lot of modules which are available out of the box. For example, let's `require` the `path` module and try it out.
+There are a lot of modules which are available out of the box for NodeJS. For example, let's `require` the `path` module and try it out.
 
 ```js
 var path = require('path');
@@ -111,21 +113,16 @@ var path = require('path');
 
 class: topic-header
 
-## Code-along: Using the `path` module
+# Code-along
+## Using the `path` module
 
 ---
 
 ## Using Modules
 
-In NodeJS, we use the `require()` function, which fetches the module that we need and gives us all of the functions and properties which it advertises.
-
-In Node, there are a lot of modules which are available out of the box. For example, let's `require` the `path` module and try it out.
-
-```js
-var path = require('path');
-```
-
+.important[
 Built-in NodeJS modules are documented at https://nodejs.org/api/.
+]
 
 ---
 
@@ -170,9 +167,21 @@ npm install request --save
 
 Just like with the `path` module earlier, we can use it by using `require` function:
 
-```
+```javascript
 var request = require('request');
+
+// the request module has various functions such as get, post or put, e.g.:
+request.get({ url : 'http://www.reddit.com/r/todayilearned/top.json' },
+  function (err, response, body) { /* do stuff */ }
+);
 ```
+
+---
+
+class: topic-header
+
+# Code-along
+## Using the `request` module
 
 ---
 
@@ -181,15 +190,16 @@ var request = require('request');
 We can write modules to be used in any other bits of NodeJS code by using the `module` global variable. For instance, we could turn a function in a file into a module by doing this:
 
 ```javascript
+// this file: myModule.js
 function thatModuleYouNeeded () {
   
 }
 module.exports = thatModuleYouNeeded;
 ```
 
-If you `require()` that file you can now use the function `thatModuleYouNeeded`.
+If you `require('./myModule')` you can now use the function `thatModuleYouNeeded`.
 
-Let's turn our `todayilearned` function into a module!
+Let's turn our "Today I Learned" function into a module!
 
 ---
 
@@ -256,7 +266,8 @@ Now, let's make ourselves an API!
 
 class: topic-header
 
-# Code-along: A REST Checkout
+# Code-along
+## A REST Checkout
 
 ---
 
